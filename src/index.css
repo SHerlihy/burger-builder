@@ -1,13 +1,135 @@
-body {
+* {
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+  font-family: "Franklin Gothic Medium", "Arial Narrow", Arial, sans-serif;
+  color: #36e26f;
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+.screen {
+  margin-top: 10vh;
+}
+
+.choice {
+  display: grid;
+  grid-template-columns: auto auto auto;
+}
+
+.ingToken {
+  height: 10vh;
+  width: 10vh;
+}
+
+.navbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  display: flex;
+  height: 10vh;
+  justify-content: space-between;
+  background: linear-gradient(#753713, #965123);
+}
+
+.home {
+  display: flex;
+}
+
+.home > p {
+  align-self: flex-end;
+  margin: 10px;
+}
+
+.box {
+  height: 100%;
+  width: 10vh;
+  margin: 10px 0px 10px 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.ingredient {
+  width: 80%;
+  box-shadow: inset -15px 0 rgba(20, 20, 20, 0.085);
+  margin-bottom: 1%;
+}
+
+.bun-top {
+  height: 20%;
+  background: linear-gradient(#bc581e, #e27b36);
+  border-radius: 50% 50% 0 0;
+  position: relative;
+}
+
+.seeds {
+  position: absolute;
+  width: 10%;
+  height: 15%;
+  background-color: white;
+  border-radius: 40%;
+  box-shadow: inset -5px 0 rgba(20, 20, 20, 0.085);
+}
+
+.seeds1 {
+  left: 75%;
+  top: 70%;
+  transform: rotate(-20deg);
+}
+.seeds2 {
+  left: 60%;
+  top: 65%;
+  transform: rotate(-40deg);
+}
+
+.seeds3 {
+  left: 70%;
+  top: 44%;
+  transform: rotate(-80deg);
+}
+.seeds4 {
+  left: 40%;
+  top: 33%;
+  transform: rotate(10deg);
+}
+.seeds5 {
+  left: 22%;
+  top: 66%;
+  transform: rotate(-10deg);
+}
+.seeds6 {
+  left: 11%;
+  top: 30%;
+  transform: rotate(50deg);
+}
+
+.salad {
+  height: 5%;
+  width: 90%;
+  background: linear-gradient(rgb(19, 156, 14), #36e26f);
+  border-radius: 15px;
+}
+
+.bacon {
+  height: 5%;
+  width: 80%;
+  background: linear-gradient(#bf3813, #c45e38);
+  border-radius: 5px;
+}
+
+.cheese {
+  height: 5%;
+  width: 80%;
+  background: linear-gradient(#f4d004, #d6bb22);
+  border-radius: 15px;
+}
+
+.patty {
+  height: 10%;
+  background: linear-gradient(#7f3608, #702e05);
+  border-radius: 5px;
+}
+
+.bun-bum {
+  height: 15%;
+  border-radius: 0 0 10px 10px;
+  background: linear-gradient(#bc581e, #e27b36);
 }

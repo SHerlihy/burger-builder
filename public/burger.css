@@ -1,0 +1,15 @@
+.box {
+  width: 500px;
+  margin: 10px;
+  height: 450px;
+}
+
+.bun-top {
+  border-radius: 10px 10px 0 0;
+  background-color: burlywood;
+}
+
+.bun-top {
+  border-radius: 5px 5px 0 0;
+  background-color: burlywood;
+}
