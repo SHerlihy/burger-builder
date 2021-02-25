@@ -19,6 +19,15 @@
   justify-content: center;
 }
 
+.choices-area {
+  width: 80vw;
+  margin-left: 10vw;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  justify-content: center;
+}
+
 .choice {
   display: grid;
   grid-template-columns: auto auto auto;

@@ -1,6 +1,6 @@
 import React from "react";
 
-const Choice = ({ ingredient }) => {
+const Choice = ({ ingredient, add, remove }) => {
   const addChoiceHandler = () => {};
   const removeChoiceHandler = () => {};
 
@@ -13,8 +13,16 @@ const Choice = ({ ingredient }) => {
       </div>
       <p>{ingredient}</p>
       <div>
-        <button onClick={addChoiceHandler}>+</button>
-        <button onClick={removeChoiceHandler}>-</button>
+        <button onClick={addChoiceHandler} onClick={add} value={ingredient}>
+          +
+        </button>
+        <button
+          onClick={removeChoiceHandler}
+          onClick={remove}
+          value={ingredient}
+        >
+          -
+        </button>
       </div>
     </div>
   );
