@@ -1,10 +1,27 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Choice from "../Components/Choice";
 import Ingredient from "../Components/Ingredient";
 import SellBar from "../Components/SellBar";
 
 const Builder = () => {
   const [ingredients, setIngredients] = useState([]);
+
+  const [price, setPrice] = useState(0);
+
+  const prices = {
+    patty: 2,
+    bacon: 1,
+    cheese: 0.5,
+    salad: 0.4,
+  };
+
+  useEffect(() => {
+    let total = 0;
+    ingredients.forEach((ing) => {
+      total = total + prices[ing];
+    });
+    setPrice(total);
+  }, [ingredients]);
 
   const addIngredient = (e) => {
     setIngredients((prev) => [...prev, e.target.value]);
@@ -40,7 +57,7 @@ const Builder = () => {
         <div className="ingredient bun-bum"></div>
       </div>
       <div className="choices-area">
-        <SellBar price="£7.95" />
+        <SellBar price={price} />
         <Choice
           ingredient="patty"
           add={addIngredient}
