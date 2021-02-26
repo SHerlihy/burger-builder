@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import axios from "axios";
 import Choice from "../Components/Choice";
 import Ingredient from "../Components/Ingredient";
 import SellBar from "../Components/SellBar";
@@ -7,6 +8,36 @@ const Builder = () => {
   const [ingredients, setIngredients] = useState([]);
 
   const [price, setPrice] = useState(0);
+
+  const [stock, setStock] = useState([]);
+
+  const [bought, setBought] = useState(false);
+
+  const dbURL = "http://localhost:4500";
+
+  useEffect(() => {
+    try {
+      axios.post(`${dbURL}/ingredients/${name}`).then((response) => {
+        console.log(response);
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  }, [bought]);
+
+  const handleBuy = () => {
+    setBought((prev) => !prev);
+  };
+
+  useEffect(() => {
+    try {
+      axios.get(`${dbURL}/`).then((response) => {
+        setStock(response.data);
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  }, []);
 
   const prices = {
     patty: 2,
@@ -57,6 +88,9 @@ const Builder = () => {
         <div className="ingredient bun-bum"></div>
       </div>
       <div className="choices-area">
+        {stock.map((ing) => {
+          return <p>{ing.name}</p>;
+        })}
         <SellBar price={price} />
         <Choice
           ingredient="patty"
