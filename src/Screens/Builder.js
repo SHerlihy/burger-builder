@@ -16,17 +16,22 @@ const Builder = () => {
   const dbURL = "http://localhost:4500";
 
   useEffect(() => {
-    try {
-      axios.post(`${dbURL}/ingredients/${name}`).then((response) => {
-        console.log(response);
-      });
-    } catch (error) {
-      console.log(error);
-    }
+    const testObj = [{ name: "patty", used: 3 }];
+    testObj.forEach((e) => {
+      try {
+        axios.patch(`${dbURL}/stock/${e.name}`, e).then((response) => {
+          console.log(response);
+        });
+      } catch (error) {
+        console.log(error);
+      }
+    });
   }, [bought]);
 
-  const handleBuy = () => {
+  const handleBuy = (e) => {
+    console.log(e);
     setBought((prev) => !prev);
+    // setBought((prev) => e.target.value);
   };
 
   useEffect(() => {
@@ -89,9 +94,14 @@ const Builder = () => {
       </div>
       <div className="choices-area">
         {stock.map((ing) => {
-          return <p>{ing.name}</p>;
+          return (
+            <p>
+              {ing.name}
+              {ing.stock}
+            </p>
+          );
         })}
-        <SellBar price={price} />
+        <SellBar price={price} bought={handleBuy} ingredients={ingredients} />
         <Choice
           ingredient="patty"
           add={addIngredient}
