@@ -79,6 +79,11 @@
   z-index: 2;
 }
 
+.nav-btns {
+  justify-content: flex-end;
+  margin: 2vh;
+}
+
 .home {
   display: flex;
 }

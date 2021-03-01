@@ -12,7 +12,7 @@ const Navbar = () => {
         <ABurger />
         <p>BurgerTime</p>
       </div>
-      <div>
+      <div className="nav-btns">
         <button onClick={clickOptionsHandler}>Options</button>
         <button onClick={clickBuyHandler}>BUY</button>
       </div>

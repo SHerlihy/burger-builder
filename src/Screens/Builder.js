@@ -88,14 +88,20 @@ const Builder = () => {
     setIngredients((prev) => [...prev, e.target.value]);
   };
 
+  //think that this changes state so keeps looping through
   const removeIngredient = (e) => {
-    setIngredients((prev) => {
-      const index = prev.indexOf(e.target.value);
-      if (index > -1) {
-        return prev.splice(index, 1);
-      }
-      return prev;
-    });
+    const updatedIngs = [...ingredients];
+
+    const index = updatedIngs.indexOf(e.target.value);
+
+    console.log(index);
+    if (index === -1) {
+      return;
+    } else {
+      updatedIngs.splice(index, 1);
+    }
+
+    setIngredients(updatedIngs);
   };
 
   return (

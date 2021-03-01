@@ -1,10 +1,10 @@
 import React from "react";
 
 const SellBar = ({ price, bought, ingredients }) => {
-  const test = "potato";
+  const total = price.toFixed(2);
   return (
     <div className="sell-bar">
-      <p>£{price}</p>
+      <p>£{total}</p>
       <button onClick={() => bought(test)} value={ingredients}>
         BUY ME
       </button>
