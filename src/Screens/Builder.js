@@ -16,8 +16,38 @@ const Builder = () => {
   const dbURL = "http://localhost:4500";
 
   useEffect(() => {
-    const testObj = [{ name: "patty", used: 3 }];
-    testObj.forEach((e) => {
+    const resetObj = [
+      { name: "patty", used: 20 },
+      { name: "cheese", used: 14 },
+      { name: "bacon", used: 13 },
+      { name: "salad", used: 12 },
+    ];
+    const present = [...new Set(ingredients)];
+    // const used = present.map((pres) => {
+    //   let num = 0;
+    //   ingredients.forEach((ing) => {
+    //     if (pres === ing) {
+    //       num = num + 1;
+    //     }
+    //   });
+    //   return num;
+    // });
+
+    const usedObj = present.map((e) => {
+      let tot = 0;
+      ingredients.forEach((el) => {
+        if (e === el) {
+          tot = tot + 1;
+        }
+      });
+      return { name: e, used: tot };
+    });
+    console.log(usedObj);
+
+    // present.forEach((e, i) => {
+    //   const newStock = stock.stock - used.i;
+    //   const update = { name: e, used: newStock };
+    usedObj.forEach((e) => {
       try {
         axios.patch(`${dbURL}/stock/${e.name}`, e).then((response) => {
           console.log(response);
@@ -26,6 +56,8 @@ const Builder = () => {
         console.log(error);
       }
     });
+
+    // });
   }, [bought]);
 
   const handleBuy = (e) => {
