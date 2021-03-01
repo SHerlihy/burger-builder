@@ -10,32 +10,61 @@
 }
 
 .build {
-  height: 80vw;
+  height: 80vh;
   width: 80vw;
   margin-left: 10vw;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  overflow: hidden;
+}
+
+.sell-bar {
+  position: absolute;
+  bottom: 20vh;
+  left: 70vw;
 }
 
 .choices-area {
-  width: 80vw;
+  width: 90%;
   margin-left: 10vw;
   display: flex;
   flex-direction: column;
   align-items: stretch;
-  justify-content: center;
+  justify-content: space-between;
 }
 
 .choice {
   display: grid;
-  grid-template-columns: auto auto auto;
+  width: 95%;
+  grid-template-columns: 10% 40% 40%;
+  grid-template-rows: 8vh;
 }
 
 .ingToken {
-  height: 10vh;
-  width: 10vh;
+  justify-self: start;
+  height: 100%;
+  width: 100%;
+}
+
+.name {
+  align-items: baseline;
+  justify-content: center;
+  height: 100%;
+  width: 100%;
+  font-size: 8vw;
+}
+
+.select {
+  justify-self: end;
+  height: 100%;
+  width: 100%;
+}
+
+.select > button {
+  height: 100%;
+  width: 49%;
 }
 
 .navbar {
@@ -153,4 +182,44 @@
   height: 15%;
   border-radius: 0 0 10px 10px;
   background: linear-gradient(#bc581e, #e27b36);
+}
+
+@media (orientation: landscape) {
+  .screen {
+    display: flex;
+  }
+  .build {
+    /* position: absolute; */
+    height: 80vh;
+    width: 30vw;
+    margin-left: 10vw;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+  }
+  .sell-bar {
+    position: absolute;
+    bottom: 10vh;
+    left: 30vw;
+  }
+  .choices-area {
+    width: 60%;
+    margin-top: 3vw;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    justify-content: space-between;
+  }
+  .choice {
+    grid-template-rows: 10vh;
+  }
+  .name {
+    align-items: baseline;
+    justify-content: center;
+    height: 100%;
+    width: 100%;
+    font-size: 4vw;
+  }
 }

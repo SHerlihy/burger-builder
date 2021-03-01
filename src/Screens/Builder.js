@@ -114,8 +114,9 @@ const Builder = () => {
         })}
         <div className="ingredient bun-bum"></div>
       </div>
+      <SellBar price={price} bought={handleBuy} ingredients={ingredients} />
+
       <div className="choices-area">
-        <SellBar price={price} bought={handleBuy} ingredients={ingredients} />
         {stock.map((e) => {
           if (e.stock > 0) {
             return (

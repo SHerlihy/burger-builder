@@ -8,8 +8,11 @@ const Choice = ({ ingredient, add, remove }) => {
       <div className="ingToken">
         <img className={ingCSS} />
       </div>
-      <p>{ingredient}</p>
-      <div>
+      <div className="name">
+        <p>{ingredient}</p>
+      </div>
+
+      <div className="select">
         <button onClick={add} value={ingredient}>
           +
         </button>
