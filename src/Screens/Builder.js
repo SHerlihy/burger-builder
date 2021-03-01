@@ -87,41 +87,21 @@ const Builder = () => {
         {ingredients.map((ing) => {
           return <Ingredient ingredient={ing} />;
         })}
-        <Ingredient ingredient="patty" />
-        <Ingredient ingredient="patty" />
-        <Ingredient ingredient="patty" />
         <div className="ingredient bun-bum"></div>
       </div>
       <div className="choices-area">
-        {stock.map((ing) => {
-          return (
-            <p>
-              {ing.name}
-              {ing.stock}
-            </p>
-          );
-        })}
         <SellBar price={price} bought={handleBuy} ingredients={ingredients} />
-        <Choice
-          ingredient="patty"
-          add={addIngredient}
-          remove={removeIngredient}
-        />
-        <Choice
-          ingredient="cheese"
-          add={addIngredient}
-          remove={removeIngredient}
-        />
-        <Choice
-          ingredient="bacon"
-          add={addIngredient}
-          remove={removeIngredient}
-        />
-        <Choice
-          ingredient="salad"
-          add={addIngredient}
-          remove={removeIngredient}
-        />
+        {stock.map((e) => {
+          if (e.stock > 0) {
+            return (
+              <Choice
+                ingredient={e.name}
+                add={addIngredient}
+                remove={removeIngredient}
+              />
+            );
+          }
+        })}
       </div>
     </div>
   );
