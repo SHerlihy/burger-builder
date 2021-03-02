@@ -14,6 +14,8 @@ const Builder = () => {
 
   const [bought, setBought] = useState(false);
 
+  const [buying, setBuying] = useState(false);
+
   const dbURL = "http://localhost:4500";
 
   useEffect(() => {
@@ -105,9 +107,14 @@ const Builder = () => {
     setIngredients(updatedIngs);
   };
 
+  const hideBuying = () => {
+    console.log("hidding");
+    setBuying((prev) => !prev);
+  };
+
   return (
     <div className="screen">
-      <OverlayPay />
+      <OverlayPay buying={buying} hide={hideBuying} />
       <div className="build">
         <div className="ingredient bun-top">
           <div className="seeds1 seeds"></div>

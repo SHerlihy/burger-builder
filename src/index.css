@@ -23,6 +23,10 @@ body {
   z-index: 2;
 }
 
+.hide {
+  visibility: hidden;
+}
+
 .paying {
   margin-top: 10vh;
   width: 70vw;
@@ -63,10 +67,6 @@ body {
 .paying__btns > * {
   height: 100%;
   width: 40%;
-}
-
-.hide-buying {
-  visibility: hidden;
 }
 
 .build {
