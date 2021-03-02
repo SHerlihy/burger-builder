@@ -3,6 +3,7 @@ import axios from "axios";
 import Choice from "../Components/Choice";
 import Ingredient from "../Components/Ingredient";
 import SellBar from "../Components/SellBar";
+import OverlayPay from "../Components/OverlayPay";
 
 const Builder = () => {
   const [ingredients, setIngredients] = useState([]);
@@ -106,6 +107,7 @@ const Builder = () => {
 
   return (
     <div className="screen">
+      <OverlayPay />
       <div className="build">
         <div className="ingredient bun-top">
           <div className="seeds1 seeds"></div>
