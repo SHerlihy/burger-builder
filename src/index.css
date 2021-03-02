@@ -4,6 +4,10 @@
   color: #36e26f;
 }
 
+body {
+  background-color: #555454;
+}
+
 .screen {
   margin-top: 10vh;
   z-index: 1;
@@ -32,39 +36,84 @@
   display: flex;
   flex-direction: column;
   align-items: stretch;
-  justify-content: space-between;
+  justify-content: center;
 }
 
-.choice {
+/* .choice {
   display: grid;
   width: 95%;
   grid-template-columns: 10% 40% 40%;
   grid-template-rows: 8vh;
+  align-items: baseline;
+  justify-content: start;
+} */
+
+.choice {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 1vh;
+  width: 100%;
+  height: 15vw;
 }
 
 .ingToken {
-  justify-self: start;
-  height: 100%;
-  width: 100%;
+  align-self: flex-end;
+  height: 60%;
+  width: 10vw;
+}
+
+.ingToken > img {
+  display: relative;
+  bottom: 0;
 }
 
 .name {
-  align-items: baseline;
-  justify-content: center;
-  height: 100%;
-  width: 100%;
   font-size: 8vw;
 }
 
 .select {
-  justify-self: end;
+  margin-right: 3vw;
   height: 100%;
-  width: 100%;
+  width: 30vw;
 }
 
 .select > button {
   height: 100%;
   width: 49%;
+}
+
+@media (orientation: landscape) {
+  .screen {
+    display: flex;
+  }
+  .build {
+    /* position: absolute; */
+    height: 80vh;
+    width: 30vw;
+    margin-left: 10vw;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+  }
+  .sell-bar {
+    position: absolute;
+    bottom: 10vh;
+    left: 30vw;
+  }
+  .choice {
+    height: 10vw;
+  }
+  .name {
+    font-size: 5vw;
+  }
+  .select {
+    margin-right: 1vw;
+    height: 100%;
+    width: 20vw;
+  }
 }
 
 .navbar {
@@ -187,44 +236,4 @@
   height: 15%;
   border-radius: 0 0 10px 10px;
   background: linear-gradient(#bc581e, #e27b36);
-}
-
-@media (orientation: landscape) {
-  .screen {
-    display: flex;
-  }
-  .build {
-    /* position: absolute; */
-    height: 80vh;
-    width: 30vw;
-    margin-left: 10vw;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    overflow: hidden;
-  }
-  .sell-bar {
-    position: absolute;
-    bottom: 10vh;
-    left: 30vw;
-  }
-  .choices-area {
-    width: 60%;
-    margin-top: 3vw;
-    display: flex;
-    flex-direction: column;
-    align-items: stretch;
-    justify-content: space-between;
-  }
-  .choice {
-    grid-template-rows: 10vh;
-  }
-  .name {
-    align-items: baseline;
-    justify-content: center;
-    height: 100%;
-    width: 100%;
-    font-size: 4vw;
-  }
 }
