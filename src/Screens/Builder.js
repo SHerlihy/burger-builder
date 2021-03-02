@@ -21,9 +21,9 @@ const Builder = () => {
   useEffect(() => {
     const resetObj = [
       { name: "patty", used: 70 },
-      { name: "cheese", used: 70 },
+      { name: "cheese", used: 3 },
       { name: "bacon", used: 70 },
-      { name: "salad", used: 70 },
+      { name: "salad", used: 1 },
     ];
     const present = [...new Set(ingredients)];
 
@@ -56,10 +56,8 @@ const Builder = () => {
     });
   }, [bought]);
 
-  const handleBuy = (e) => {
-    console.log(e);
+  const handleBuy = () => {
     setBought((prev) => !prev);
-    // setBought((prev) => e.target.value);
   };
 
   useEffect(() => {
@@ -114,7 +112,7 @@ const Builder = () => {
 
   return (
     <div className="screen">
-      <OverlayPay buying={buying} hide={hideBuying} />
+      <OverlayPay buying={buying} hide={hideBuying} bought={handleBuy} />
       <div className="build">
         <div className="ingredient bun-top">
           <div className="seeds1 seeds"></div>
@@ -129,10 +127,16 @@ const Builder = () => {
         })}
         <div className="ingredient bun-bum"></div>
       </div>
-      <SellBar price={price} bought={handleBuy} ingredients={ingredients} />
+      <SellBar
+        overlay={hideBuying}
+        price={price}
+        bought={handleBuy}
+        ingredients={ingredients}
+      />
 
       <div className="choices-area">
         {stock.map((e) => {
+          console.log(e.stock);
           if (e.stock > 0) {
             return (
               <Choice

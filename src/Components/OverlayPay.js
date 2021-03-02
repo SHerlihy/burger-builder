@@ -1,12 +1,12 @@
 import React, { useEffect } from "react";
 import ABurger from "./ABurger";
 
-const OverlayPay = ({ buying, hide }) => {
+const OverlayPay = ({ buying, hide, bought }) => {
   useEffect(() => {
     console.log("effecting");
   }, [buying]);
 
-  const toggleHide = buying ? "backdrop hide" : "backdrop";
+  const toggleHide = buying ? "backdrop" : "backdrop hide";
 
   return (
     <div className={toggleHide}>
@@ -23,7 +23,7 @@ const OverlayPay = ({ buying, hide }) => {
         </div>
         <div className="paying__btns">
           <button onClick={hide}>CANCEL</button>
-          <button>PAY</button>
+          <button onClick={bought}>PAY</button>
         </div>
       </section>
     </div>
