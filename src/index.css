@@ -1,7 +1,7 @@
 * {
   margin: 0;
   font-family: "Franklin Gothic Medium", "Arial Narrow", Arial, sans-serif;
-  color: #36e26f;
+  color: rgb(255, 255, 100);
 }
 
 body {
@@ -86,6 +86,14 @@ body {
   left: 70vw;
 }
 
+.sell-bar > button {
+  border: none;
+  border-radius: 5px;
+  background-color: #965123;
+  height: 10vh;
+  width: 10vw;
+}
+
 .sell-bar > button:hover {
   transition: 500ms;
   background-color: rgb(120, 30, 20);
@@ -159,14 +167,6 @@ body {
   justify-content: space-between;
   background: linear-gradient(#753713, #965123);
   z-index: 2;
-}
-
-.sell-bar > button {
-  border: none;
-  border-radius: 5px;
-  background-color: #965123;
-  height: 10vh;
-  width: 10vw;
 }
 
 .nav-btns {

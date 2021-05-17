@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import ReactDOM from "react-dom";
 import axios from "axios";
 import Choice from "../Components/Choice";
 import Ingredient from "../Components/Ingredient";
@@ -112,7 +113,11 @@ const Builder = () => {
 
   return (
     <div className="screen">
-      <OverlayPay buying={buying} hide={hideBuying} bought={handleBuy} />
+      {ReactDOM.createPortal(
+        <OverlayPay buying={buying} hide={hideBuying} bought={handleBuy} />,
+        document.getElementById("overlay")
+      )}
+
       <div className="build">
         <div className="ingredient bun-top">
           <div className="seeds1 seeds"></div>
@@ -123,7 +128,7 @@ const Builder = () => {
           <div className="seeds6 seeds"></div>
         </div>
         {ingredients.map((ing) => {
-          return <Ingredient ingredient={ing} />;
+          return <Ingredient key={ing} ingredient={ing} />;
         })}
         <div className="ingredient bun-bum"></div>
       </div>
@@ -140,6 +145,7 @@ const Builder = () => {
           if (e.stock > 0) {
             return (
               <Choice
+                key={e.name}
                 ingredient={e.name}
                 add={addIngredient}
                 remove={removeIngredient}
