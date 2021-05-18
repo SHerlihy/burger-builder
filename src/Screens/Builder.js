@@ -1,17 +1,19 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import ReactDOM from "react-dom";
 import axios from "axios";
 import Choice from "../Components/Choice";
 import Ingredient from "../Components/Ingredient";
 import SellBar from "../Components/SellBar";
 import OverlayPay from "../Components/OverlayPay";
+import BunTop from "../Components/BunTop";
+import { v4 as uuidv4 } from "uuid";
 
 const Builder = () => {
   const [ingredients, setIngredients] = useState([]);
 
   const [price, setPrice] = useState(0);
 
-  const [stock, setStock] = useState([]);
+  const stock = useRef([]);
 
   const [bought, setBought] = useState(false);
 
@@ -20,14 +22,21 @@ const Builder = () => {
   const dbURL = "http://localhost:4500";
 
   useEffect(() => {
-    const resetObj = [
-      { name: "patty", used: 70 },
-      { name: "cheese", used: 3 },
-      { name: "bacon", used: 70 },
-      { name: "salad", used: 1 },
-    ];
+    try {
+      axios.get(`${dbURL}/`).then((response) => {
+        stock.current = response.data;
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  }, []);
+
+  useEffect(() => {
+    // array of ingredients in burger
     const present = [...new Set(ingredients)];
 
+    // tallying the number of used ingredients in burger
+    //should be sending this to back-end instead and having server do stock update
     const usedObj = present.map((e) => {
       let tot = 0;
       ingredients.forEach((el) => {
@@ -38,14 +47,18 @@ const Builder = () => {
       return { name: e, used: tot };
     });
 
-    usedObj.forEach((e) => {
-      stock.forEach((el) => {
-        if (e.name === el.name) {
-          e.used = e.used + el.stock;
+    //deduction of used ingredients from the stock...
+    //seems vulnerable to abuse, could be done on backend instead
+    usedObj.forEach(({ name, used }) => {
+      stock.current.forEach((el) => {
+        if (name === el.name) {
+          used = used + el.stock;
         }
       });
     });
 
+    //sending the updated stock levels to back-end
+    //would be a nightmare if multiple users used this
     usedObj.forEach((e) => {
       try {
         axios.patch(`${dbURL}/stock/${e.name}`, e).then((response) => {
@@ -61,16 +74,7 @@ const Builder = () => {
     setBought((prev) => !prev);
   };
 
-  useEffect(() => {
-    try {
-      axios.get(`${dbURL}/`).then((response) => {
-        setStock(response.data);
-      });
-    } catch (error) {
-      console.log(error);
-    }
-  }, []);
-
+  //needs to come from backend to protect it also...no value for manager added
   const prices = {
     patty: 2,
     bacon: 1,
@@ -90,13 +94,11 @@ const Builder = () => {
     setIngredients((prev) => [...prev, e.target.value]);
   };
 
-  //think that this changes state so keeps looping through
   const removeIngredient = (e) => {
     const updatedIngs = [...ingredients];
 
     const index = updatedIngs.indexOf(e.target.value);
 
-    console.log(index);
     if (index === -1) {
       return;
     } else {
@@ -107,7 +109,6 @@ const Builder = () => {
   };
 
   const hideBuying = () => {
-    console.log("hidding");
     setBuying((prev) => !prev);
   };
 
@@ -117,18 +118,10 @@ const Builder = () => {
         <OverlayPay buying={buying} hide={hideBuying} bought={handleBuy} />,
         document.getElementById("overlay")
       )}
-
       <div className="build">
-        <div className="ingredient bun-top">
-          <div className="seeds1 seeds"></div>
-          <div className="seeds2 seeds"></div>
-          <div className="seeds3 seeds"></div>
-          <div className="seeds4 seeds"></div>
-          <div className="seeds5 seeds"></div>
-          <div className="seeds6 seeds"></div>
-        </div>
+        <BunTop />
         {ingredients.map((ing) => {
-          return <Ingredient key={ing} ingredient={ing} />;
+          return <Ingredient key={uuidv4()} ingredient={ing} />;
         })}
         <div className="ingredient bun-bum"></div>
       </div>
@@ -138,10 +131,8 @@ const Builder = () => {
         bought={handleBuy}
         ingredients={ingredients}
       />
-
       <div className="choices-area">
-        {stock.map((e) => {
-          console.log(e.stock);
+        {stock.current.map((e) => {
           if (e.stock > 0) {
             return (
               <Choice
