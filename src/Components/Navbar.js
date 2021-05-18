@@ -1,20 +1,15 @@
 import React from "react";
 import ABurger from "./ABurger";
 
-const Navbar = () => {
-  const clickHomeHandler = () => {};
-
-  const clickBuyHandler = () => {};
-  const clickOptionsHandler = () => {};
+const Navbar = ({ overlay }) => {
   return (
     <div className="navbar">
-      <div className="home" onClick={clickHomeHandler}>
+      <div className="home">
         <ABurger />
         <p>BurgerTime</p>
       </div>
       <div className="nav-btns">
-        <button onClick={clickOptionsHandler}>Options</button>
-        <button onClick={clickBuyHandler}>BUY</button>
+        <button onClick={overlay}>BUY</button>
       </div>
     </div>
   );

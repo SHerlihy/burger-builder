@@ -8,7 +8,7 @@ import OverlayPay from "../Components/OverlayPay";
 import BunTop from "../Components/BunTop";
 import { v4 as uuidv4 } from "uuid";
 
-const Builder = () => {
+const Builder = ({ overlay, buying }) => {
   const [ingredients, setIngredients] = useState([]);
 
   const [price, setPrice] = useState(0);
@@ -16,8 +16,6 @@ const Builder = () => {
   const [stock, setStock] = useState([]);
 
   const [bought, setBought] = useState(false);
-
-  const [buying, setBuying] = useState(false);
 
   const dbURL = "http://localhost:4500";
 
@@ -89,14 +87,10 @@ const Builder = () => {
     setIngredients(updatedIngs);
   };
 
-  const hideBuying = () => {
-    setBuying((prev) => !prev);
-  };
-
   return (
     <div className="screen">
       {ReactDOM.createPortal(
-        <OverlayPay buying={buying} hide={hideBuying} bought={handleBuy} />,
+        <OverlayPay buying={buying} hide={overlay} bought={handleBuy} />,
         document.getElementById("overlay")
       )}
       <div className="build">
@@ -107,7 +101,7 @@ const Builder = () => {
         <div className="ingredient bun-bum"></div>
       </div>
       <SellBar
-        overlay={hideBuying}
+        overlay={overlay}
         price={price}
         bought={handleBuy}
         ingredients={ingredients}
