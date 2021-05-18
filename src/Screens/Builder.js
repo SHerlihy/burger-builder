@@ -13,7 +13,7 @@ const Builder = () => {
 
   const [price, setPrice] = useState(0);
 
-  const stock = useRef([]);
+  const [stock, setStock] = useState([]);
 
   const [bought, setBought] = useState(false);
 
@@ -24,7 +24,7 @@ const Builder = () => {
   useEffect(() => {
     try {
       axios.get(`${dbURL}/`).then((response) => {
-        stock.current = response.data;
+        setStock(response.data);
       });
     } catch (error) {
       console.log(error);
@@ -47,21 +47,9 @@ const Builder = () => {
       return { name: e, used: tot };
     });
 
-    //deduction of used ingredients from the stock...
-    //seems vulnerable to abuse, could be done on backend instead
-    usedObj.forEach(({ name, used }) => {
-      stock.current.forEach((el) => {
-        if (name === el.name) {
-          used = used + el.stock;
-        }
-      });
-    });
-
-    //sending the updated stock levels to back-end
-    //would be a nightmare if multiple users used this
     usedObj.forEach((e) => {
       try {
-        axios.patch(`${dbURL}/stock/${e.name}`, e).then((response) => {
+        axios.patch(`${dbURL}/ingredientUsed/${e.name}`, e).then((response) => {
           console.log(response);
         });
       } catch (error) {
@@ -74,18 +62,11 @@ const Builder = () => {
     setBought((prev) => !prev);
   };
 
-  //needs to come from backend to protect it also...no value for manager added
-  const prices = {
-    patty: 2,
-    bacon: 1,
-    cheese: 0.5,
-    salad: 0.4,
-  };
-
   useEffect(() => {
     let total = 0;
     ingredients.forEach((ing) => {
-      total = total + prices[ing];
+      const data = stock.find((e) => e.name === ing);
+      total = total + Number(data.price);
     });
     setPrice(total);
   }, [ingredients]);
@@ -132,7 +113,7 @@ const Builder = () => {
         ingredients={ingredients}
       />
       <div className="choices-area">
-        {stock.current.map((e) => {
+        {stock.map((e) => {
           if (e.stock > 0) {
             return (
               <Choice
