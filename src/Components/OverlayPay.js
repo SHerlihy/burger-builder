@@ -1,15 +1,9 @@
 import React, { useEffect } from "react";
 import ABurger from "./ABurger";
 
-const OverlayPay = ({ buying, hide, bought }) => {
-  useEffect(() => {
-    console.log("effecting");
-  }, [buying]);
-
-  const toggleHide = buying ? "backdrop" : "backdrop hide";
-
+const OverlayPay = ({ hide, bought }) => {
   return (
-    <div className={toggleHide}>
+    <div aria-label="overlay" className={toggleHide}>
       <section className="paying">
         <div className="paying__title">
           <ABurger />

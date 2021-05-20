@@ -89,10 +89,12 @@ const Builder = ({ overlay, buying }) => {
 
   return (
     <div className="screen">
-      {ReactDOM.createPortal(
-        <OverlayPay buying={buying} hide={overlay} bought={handleBuy} />,
-        document.getElementById("overlay")
-      )}
+      {buying &&
+        ReactDOM.createPortal(
+          <OverlayPay buying={buying} hide={overlay} bought={handleBuy} />,
+          document.getElementById("overlay")
+        )}
+
       <div className="build">
         <BunTop />
         {ingredients.map((ing) => {
