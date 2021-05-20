@@ -3,7 +3,7 @@ import ABurger from "./ABurger";
 
 const OverlayPay = ({ hide, bought }) => {
   return (
-    <div aria-label="overlay" className={toggleHide}>
+    <div>
       <section className="paying">
         <div className="paying__title">
           <ABurger />

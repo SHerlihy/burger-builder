@@ -4,25 +4,35 @@ import userEvent from "@testing-library/user-event";
 import OverlayPay from "./OverlayPay";
 
 describe("OverlayPay component", () => {
-  test("shows when buying prop is true", () => {
+  test("shows cancel and pay buttons", () => {
     //Arrange
-    render(<OverlayPay buying={true} />);
+    render(<OverlayPay />);
     //Act
     //Assert
-    const overlay = screen.getAllByRole("button", { hidden: true });
+    const overlay = screen.getAllByRole("button");
+
     overlay.forEach((e) => {
-      expect(e).toBeVisible();
+      expect(e).toBeInTheDocument();
     });
+
+    const cancelBtn = overlay.some((e) => {
+      if (e.textContent === "CANCEL") return true;
+    });
+
+    expect(cancelBtn).toEqual(true);
+
+    const payBtn = overlay.some((e) => {
+      if (e.textContent === "PAY") return true;
+    });
+
+    expect(payBtn).toEqual(true);
   });
-  test("hides when buying prop is false", () => {
+  test("has multiple input elements", () => {
     //Arrange
-    render(<OverlayPay buying={false} />);
+    render(<OverlayPay />);
     //Act
     //Assert
-    const overlay = screen.getByLabelText("overlay");
-    expect(overlay).toHaveStyle({ visibility: "hidden" });
-    // overlay.forEach((e) => {
-    //   expect(e).toHaveStyle({ visibility: "hidden" });
-    // });
+    const inputEles = screen.getAllByRole("textbox");
+    expect(inputEles.length).toBeGreaterThan(1);
   });
 });
