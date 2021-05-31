@@ -5,7 +5,7 @@ const Choice = ({ ingredient, add, remove }) => {
   const capIng = ingredient.charAt(0).toUpperCase() + ingredient.substring(1);
 
   return (
-    <div className="choice">
+    <li data-testid="component-Choice" className="choice">
       <div className="ingToken">
         <img className={ingCSS} />
       </div>
@@ -21,7 +21,7 @@ const Choice = ({ ingredient, add, remove }) => {
           +
         </button>
       </div>
-    </div>
+    </li>
   );
 };
 

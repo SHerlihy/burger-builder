@@ -3,7 +3,7 @@ import ABurger from "./ABurger";
 
 const OverlayPay = ({ hide, bought }) => {
   return (
-    <div>
+    <div data-test="component-OverlayPay">
       <section className="paying">
         <div className="paying__title">
           <ABurger />

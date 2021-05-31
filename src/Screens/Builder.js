@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import ReactDOM from "react-dom";
 import axios from "axios";
 import Choice from "../Components/Choice";
@@ -7,9 +8,12 @@ import SellBar from "../Components/SellBar";
 import OverlayPay from "../Components/OverlayPay";
 import BunTop from "../Components/BunTop";
 import { v4 as uuidv4 } from "uuid";
+import { subIngredient } from "../actions";
 
 const Builder = ({ overlay, buying }) => {
-  const [ingredients, setIngredients] = useState([]);
+  const dispatch = useDispatch();
+  const ingredients = useSelector((state) => state.ingredients);
+  // const [ingredients, setIngredients] = useState([]);
 
   const [price, setPrice] = useState(0);
 
@@ -19,7 +23,7 @@ const Builder = ({ overlay, buying }) => {
 
   const dbURL = "http://localhost:4500";
 
-  useEffect(() => {
+  const getInv = () => {
     try {
       axios.get(`${dbURL}/`).then((response) => {
         setStock(response.data);
@@ -27,6 +31,20 @@ const Builder = ({ overlay, buying }) => {
     } catch (error) {
       console.log(error);
     }
+  };
+
+  const patchInv = (e) => {
+    try {
+      axios.patch(`${dbURL}/ingredientUsed/${e.name}`, e).then((response) => {
+        console.log(response);
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  useEffect(() => {
+    getInv();
   }, []);
 
   useEffect(() => {
@@ -46,13 +64,7 @@ const Builder = ({ overlay, buying }) => {
     });
 
     usedObj.forEach((e) => {
-      try {
-        axios.patch(`${dbURL}/ingredientUsed/${e.name}`, e).then((response) => {
-          console.log(response);
-        });
-      } catch (error) {
-        console.log(error);
-      }
+      patchInv(e);
     });
   }, [bought]);
 
@@ -70,7 +82,8 @@ const Builder = ({ overlay, buying }) => {
   }, [ingredients]);
 
   const addIngredient = (e) => {
-    setIngredients((prev) => [...prev, e.target.value]);
+    dispatch(addIngredient(e.target.value));
+    // setIngredients((prev) => [...prev, e.target.value]);
   };
 
   const removeIngredient = (e) => {
@@ -84,11 +97,12 @@ const Builder = ({ overlay, buying }) => {
       updatedIngs.splice(index, 1);
     }
 
-    setIngredients(updatedIngs);
+    dispatch(subIngredient(e.target.value));
+    // setIngredients(updatedIngs);
   };
 
   return (
-    <div className="screen">
+    <div data-testid="component-Builder" className="screen">
       {buying &&
         ReactDOM.createPortal(
           <OverlayPay buying={buying} hide={overlay} bought={handleBuy} />,
@@ -108,7 +122,7 @@ const Builder = ({ overlay, buying }) => {
         bought={handleBuy}
         ingredients={ingredients}
       />
-      <div className="choices-area">
+      <ul className="choices-area">
         {stock.map((e) => {
           if (e.stock > 0) {
             return (
@@ -121,7 +135,7 @@ const Builder = ({ overlay, buying }) => {
             );
           }
         })}
-      </div>
+      </ul>
     </div>
   );
 };
