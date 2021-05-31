@@ -1,11 +1,22 @@
 import React from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { toggleBought, toggleBuying } from "../actions";
 
-const SellBar = ({ price, bought, ingredients, overlay }) => {
+const SellBar = () => {
+  const dispatch = useDispatch();
+
+  const price = useSelector((state) => state.price);
+
   const total = price.toFixed(2);
+
   return (
     <div className="sell-bar">
       <p>£{total}</p>
-      <button onClick={(bought, overlay)} value={ingredients}>
+      <button
+        onClick={
+          (() => dispatch(toggleBought()), () => dispatch(toggleBuying()))
+        }
+      >
         BUY ME
       </button>
     </div>

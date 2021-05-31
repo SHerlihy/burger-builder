@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import ReactDOM from "react-dom";
 import axios from "axios";
@@ -8,30 +8,29 @@ import SellBar from "../Components/SellBar";
 import OverlayPay from "../Components/OverlayPay";
 import BunTop from "../Components/BunTop";
 import { v4 as uuidv4 } from "uuid";
-import { subIngredient } from "../actions";
+import { setPrice, setStock } from "../actions";
 
-const Builder = ({ overlay, buying }) => {
+const Builder = () => {
   const dispatch = useDispatch();
   const ingredients = useSelector((state) => state.ingredients);
-  // const [ingredients, setIngredients] = useState([]);
-
-  const [price, setPrice] = useState(0);
-
-  const [stock, setStock] = useState([]);
-
-  const [bought, setBought] = useState(false);
+  const buying = useSelector((state) => state.buying);
+  const stock = useSelector((state) => state.stock);
+  const bought = useSelector((state) => state.bought);
 
   const dbURL = "http://localhost:4500";
 
-  const getInv = () => {
-    try {
-      axios.get(`${dbURL}/`).then((response) => {
-        setStock(response.data);
-      });
-    } catch (error) {
-      console.log(error);
-    }
-  };
+  useEffect(() => {
+    const getInv = () => {
+      try {
+        axios.get(`${dbURL}/`).then((response) => {
+          dispatch(setStock(response.data));
+        });
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    getInv();
+  }, []);
 
   const patchInv = (e) => {
     try {
@@ -42,10 +41,6 @@ const Builder = ({ overlay, buying }) => {
       console.log(error);
     }
   };
-
-  useEffect(() => {
-    getInv();
-  }, []);
 
   useEffect(() => {
     // array of ingredients in burger
@@ -66,11 +61,8 @@ const Builder = ({ overlay, buying }) => {
     usedObj.forEach((e) => {
       patchInv(e);
     });
+    //ingredients not dependency as only want update when product bought
   }, [bought]);
-
-  const handleBuy = () => {
-    setBought((prev) => !prev);
-  };
 
   useEffect(() => {
     let total = 0;
@@ -78,34 +70,15 @@ const Builder = ({ overlay, buying }) => {
       const data = stock.find((e) => e.name === ing);
       total = total + Number(data.price);
     });
-    setPrice(total);
+    dispatch(setPrice(total));
+    //don't want update on dispatch or stock change so omitted from dependencies
   }, [ingredients]);
-
-  const addIngredient = (e) => {
-    dispatch(addIngredient(e.target.value));
-    // setIngredients((prev) => [...prev, e.target.value]);
-  };
-
-  const removeIngredient = (e) => {
-    const updatedIngs = [...ingredients];
-
-    const index = updatedIngs.indexOf(e.target.value);
-
-    if (index === -1) {
-      return;
-    } else {
-      updatedIngs.splice(index, 1);
-    }
-
-    dispatch(subIngredient(e.target.value));
-    // setIngredients(updatedIngs);
-  };
 
   return (
     <div data-testid="component-Builder" className="screen">
       {buying &&
         ReactDOM.createPortal(
-          <OverlayPay buying={buying} hide={overlay} bought={handleBuy} />,
+          <OverlayPay />,
           document.getElementById("overlay")
         )}
 
@@ -116,23 +89,11 @@ const Builder = ({ overlay, buying }) => {
         })}
         <div className="ingredient bun-bum"></div>
       </div>
-      <SellBar
-        overlay={overlay}
-        price={price}
-        bought={handleBuy}
-        ingredients={ingredients}
-      />
+      <SellBar />
       <ul className="choices-area">
         {stock.map((e) => {
           if (e.stock > 0) {
-            return (
-              <Choice
-                key={e.name}
-                ingredient={e.name}
-                add={addIngredient}
-                remove={removeIngredient}
-              />
-            );
+            return <Choice key={e.name} ingredient={e.name} />;
           }
         })}
       </ul>
